@@ -122,7 +122,7 @@ public class Map extends Activity implements OnMapReadyCallback,
 
 		while (iterator.hasNext()) {
 			Wifi o = iterator.next();
-			if (o.getSignal() < -50) {
+			if (o.getSignal() < -80) {
 				iterator.remove();
 			}
 		}

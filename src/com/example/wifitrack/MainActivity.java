@@ -42,7 +42,8 @@ public class MainActivity extends Activity {
 	public void onResume(){
 		super.onResume();
 		wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
-		timer.schedule(new Thread(), 0, 2000);
+		timer = new Timer();
+		timer.schedule(new Thread(), 0, 1000);
 	}
 
 	public void onPause() {
@@ -67,15 +68,16 @@ public class MainActivity extends Activity {
 			sb = new StringBuilder();
 			List<ScanResult> list = wifiManager.getScanResults();
 			Iterator<ScanResult> i = list.iterator();
-			
+			int max = -1000;
 			sb.append("time: "+System.currentTimeMillis());
 			sb.append("Scanned best 5 result:\n");
 			for (int x = 0; x < 5 && i.hasNext(); x++) {
 				sr = i.next();
 				//if (sr.level < -50) {
-				if(x == 0)//strongest signal level come first
+				if(sr.level > max){
+					max = sr.level;
 					bssid_best = sr.BSSID;
-				//}
+				}
 				sb.append("\n" + "SSID: " + sr.SSID + "\tMAC: " + sr.BSSID+ "\tlevel: " + sr.level);
 
 			}
